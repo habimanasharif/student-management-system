@@ -1,0 +1,28 @@
+.wraper-height-90{
+ 
+}
+.d-flec{
+    gap:10px !important;
+}
+ .student-list{
+ height: 90vh;
+ margin-left: 15px!important;
+ }
+ .form-label{
+    margin-bottom: .1rem !important;
+ }
+ .dot{
+    background-color: black;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    margin-top: 1px;
+    cursor:pointer;
+ }
+ li .btn{
+    --bs-btn-padding-x: 0 rem !important;
+    text-align: left;
+ }
+ li .btn:active{
+    border: none;
+ }
