@@ -1,9 +1,6 @@
 <?php
-session_start();
-$_SESSION['student'] =[];
 $st_number=1;
- $students=[
-  ];
+$students=[];
   if(!empty($_POST["exist_reg_number"])){
     foreach($_POST["exist_reg_number"] as $key=> $reg_num){
       $student=[
@@ -12,10 +9,11 @@ $st_number=1;
         "st_classroom"=>$_POST["exist_st_classroom"][$key],
         "st_grade"=>$_POST["exist_st_grade"][$key],
       ];
-      $students[$key]=$student;
+      $students[$reg_num]=$student;
       $st_number++;
     }
   }
+  print_r($_POST);
 
  if(isset($_POST)){
  if(isset($_POST["add_student"])&& $_POST["add_student"]==1){
@@ -26,9 +24,15 @@ $st_number=1;
     "st_classroom"=>$_POST["st_classroom"],
     "st_grade"=>$_POST["st_grade"],
   ];
-  $students[]=$student;
+  $students["st_$st_number"]=$student;
 
- }}
+ }else if(isset($_POST["delete_student"])&& array_key_exists( $_POST["delete_student"],$students)){
+  $st_reg=$_POST["delete_student"];
+   unset($students[$st_reg]);
+ }
+
+
+}
 ?>
 
 <!DOCTYPE html>
@@ -44,13 +48,14 @@ $st_number=1;
 <body>
 
     <div class="container ">
+    <form action="" method="POST">
         <h1 class="text-center">Student Mangement System</h1>
         <div class="d-flex  wraper-height-90">
         <div class="">
         <div class="card" style="width: 18rem;">
   <div class="card-body">
     <h5 class="card-title text-center">Add Student</h5>
-    <form action="" method="POST">
+    
     <div class="mb-2">
   <label for="exampleFormControlInput1" class="form-label">Student Name</label>
   <input type="text" name="st_name" class="form-control" id="exampleFormControlInput1" >
@@ -70,7 +75,7 @@ $st_number=1;
 </div>
 <!-- <input type="hidden" name="st_array" value=<?php echo json_encode($students);?>/> -->
 <?php
- foreach ($students as $student){
+ foreach ($students as $reg_num=>$student){
   $st_reg=$student["reg_number"];
   $st_name=$student["st_name"];
   $st_classroom=$student["st_classroom"];
@@ -84,7 +89,7 @@ $st_number=1;
 
 <button type="submit" name="add_student" value=1 class="btn btn-primary">Add Student</button>
 
-    </form>
+   
     
   </div>
 </div>
@@ -131,11 +136,9 @@ $st_number=1;
 </button>
 </a></li>
 
-    <li><a class="dropdown-item" href="#">
-      <form action="" method="POST">
-      <button>Delete</button>
-      </form>
-    </a></li>
+    <li>
+      <button type="submit" name="delete_student" value="<?php echo $student["reg_number"]?>">Delete</button>
+    </li>
   </ul>
 </div>    
     </td>
@@ -184,6 +187,7 @@ $st_number=1;
 <?php } ?>
         </div>
         </div>
+        </form>
     </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 </body>
