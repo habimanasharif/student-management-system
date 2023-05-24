@@ -13,7 +13,6 @@ $students=[];
       $st_number++;
     }
   }
-  print_r($_POST);
 
  if(isset($_POST)){
  if(isset($_POST["add_student"])&& $_POST["add_student"]==1){
@@ -29,6 +28,15 @@ $students=[];
  }else if(isset($_POST["delete_student"])&& array_key_exists( $_POST["delete_student"],$students)){
   $st_reg=$_POST["delete_student"];
    unset($students[$st_reg]);
+ }else if(isset($_POST["update_student"])&& array_key_exists( $_POST["update_student"],$students)){
+  $st_reg=$_POST["update_student"];
+  $students[$st_reg]=$student=[
+    "reg_number"=>$st_reg,
+    "st_name"=>$_POST["updated_name_$st_reg"],
+    "st_classroom"=>$_POST["updated_class_$st_reg"],
+    "st_grade"=>$_POST["updated_grade_$st_reg"],
+  ];
+  
  }
 
 
@@ -127,17 +135,20 @@ $students=[];
       </div>
   </button>
   <ul class="dropdown-menu" aria-labelledby="ellipsisDropdown">
-    <li><a class="dropdown-item" href="#"><!-- Button trigger modal -->
+    <li>
+    <div class="">
       <?php 
       $array_st="#".str_replace(' ','-',$student["st_name"]);
-      echo "<button type='button' name='st_action' value='$array_st' class='btn w-100' data-bs-toggle='modal' data-bs-target='$array_st'> "
+      echo "<button type='button' name='st_action' value='$array_st' class='btn w-100 btn-primary' data-bs-toggle='modal' data-bs-target='$array_st'> "
       ?>
   Edit
 </button>
-</a></li>
+    </div></li>
 
     <li>
-      <button type="submit" name="delete_student" value="<?php echo $student["reg_number"]?>">Delete</button>
+      <div class="">
+      <button type="submit" name="delete_student" class='btn w-100 btn-danger' value="<?php echo $student["reg_number"]?>">Delete</button>
+      </div>
     </li>
   </ul>
 </div>    
@@ -157,15 +168,14 @@ $students=[];
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-      <form action="">
     <div class="mb-2">
      <label for='exampleFormControlInput1' class='form-label'>Student Name</label>
-  <input type='text' value="<?php echo htmlspecialchars($student["st_name"])?>" class='form-control' id='exampleFormControlInput1' >
+  <input type='text' name="updated_name_<?php echo $student["reg_number"] ?>" value="<?php echo htmlspecialchars($student["st_name"])?>" class='form-control' id='exampleFormControlInput1' >
 
 </div>
 <div class="mb-2">
   <label for="exampleFormControlInput1" class="form-label">Student Class</label>
-      <select  class="form-select">
+      <select  name="updated_class_<?php echo $student["reg_number"] ?>" class="form-select">
         <option <?php if($student['st_classroom']== 'Class A'){echo "selected";} ?>  > Class A</option>
         <option <?php if($student['st_classroom']== 'Class B'){echo "selected";} ?> > Class B </option>
         <option <?php if($student['st_classroom']== 'Class C'){echo "selected";} ?>  > Class C</option>
@@ -174,12 +184,11 @@ $students=[];
 </div>
 <div class="mb-2">
   <label for="exampleFormControlInput1" class="form-label">Grade</label>
-  <input type="number" value=<?php echo $student["st_grade"] ?> class="form-control" id="exampleFormControlInput1" max="10" min="0">
+  <input type="number" name="updated_grade_<?php echo $student["reg_number"] ?>" value=<?php echo $student["st_grade"] ?> class="form-control" id="exampleFormControlInput1" max="10" min="0">
 </div>
 
-<button type="submit" class="btn btn-primary">Update Student</button>
+<button type="submit" name="update_student" value="<?php echo $student["reg_number"] ?>" class="btn btn-primary">Update Student</button>
 
-    </form>
       </div>
     </div>
   </div>
