@@ -22,7 +22,12 @@
  li .btn{
     --bs-btn-padding-x: 0 rem !important;
     text-align: left;
+    border-radius: 0px !important;
  }
  li .btn:active{
     border: none;
  }
+ .dropdown-menu{
+   --bs-dropdown-padding-y:0.5 rem !important;
+ }
+ 
