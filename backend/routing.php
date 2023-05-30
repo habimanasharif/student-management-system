@@ -1,7 +1,8 @@
 <?php
  if(isset($_POST)){
     if(isset($_POST["add_student"])&& $_POST["add_student"]==1){
-     $st_number=count(readFromJson("data.json"))+1;
+        $array=readFromJson("data.json");
+        $st_number=explode('_',end($array)["reg_number"])[1]+1;
      $student=[
        "reg_number"=>"st_".$st_number,
        "st_name"=>$_POST["st_name"],
