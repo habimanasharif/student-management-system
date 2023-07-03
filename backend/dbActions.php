@@ -24,34 +24,55 @@ return $students;
 
 function addData(array $data,string $key):void{
   global $conn;
+  global $message;
   $stmt = $conn->prepare("INSERT INTO student (reg_number, st_name, st_classroom, st_grade) VALUES (?, ?, ?, ?)");
   $stmt->bind_param("sssi", $key,$data["st_name"], $data["st_classroom"],$data["st_grade"]);
   if ($stmt->execute()) {
-   
+    $message = [
+      "type" => "success",
+      "text" => "Student added successfully"
+    ];
   }else{
-    echo "Failed";
+    $message = [
+      "type" => "error",
+      "text" => "Student wasn't added please try again"
+    ];
   }
   $stmt->close();
 }
 function removeData(string $key){
   global $conn;
+  global $message;
   $stmt = $conn->prepare("DELETE FROM student WHERE reg_number = ?");
   $stmt->bind_param("s", $key);
   if ($stmt->execute()) {
-
+    $message = [
+      "type" => "success",
+      "text" => "Student removed successfully"
+    ];
   }else{
-    echo "Failed to delete student";
+    $message = [
+      "type" => "error",
+      "text" => "Student wasn't removed successfully"
+    ];
   }
 
 }
 function updateData(array $data,string $key):void{
   global $conn;
+  global $message;
   $stmt = $conn->prepare("UPDATE student SET st_name = ?, st_classroom = ?, st_grade = ? WHERE reg_number = ?");
   $stmt->bind_param("ssis",$data["st_name"], $data["st_classroom"],$data["st_grade"],$key);
   if ($stmt->execute()) {
-
+    $message = [
+      "type" => "success",
+      "text" => "Student updated successfully"
+    ];
   }else{
-    echo "Failed to update student";
+    $message = [
+      "type" => "error",
+      "text" => "Student wasn't updated successfully"
+    ];
   }
  
 }

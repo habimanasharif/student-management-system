@@ -2,6 +2,8 @@
 declare(strict_types=1);
 require_once "backend/db/mysql_connect.php";
 global $system_Type;
+global $message;
+$message = [];
 $system_Type="database";
 $st_number=1;
 if($system_Type==="database"){

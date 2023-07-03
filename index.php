@@ -13,9 +13,19 @@ require_once "backend/app.php";
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-    <div class="container ">
+    <div class="container position-relative ">
     <form action="" method="POST">
+      <?php global $message; if ($message){?>
+      <div class="position-absolute d-flex mt-2 w-100 justify-content-center ">
+   <div class="<?php if($message["type"]==="success") echo 'bg-success'; else echo 'bg-danger'; ?>  message shadow  w-50 d-flex  ">
+    <div class="py-2 px-2">
+    <?php echo $message["text"] ?></div>
+    
+    <button type="submit" name="cancel" value="1" class="btn-close me-2 m-auto" aria-label="Close"> </button>
+   
+  </div>
+  </div>
+  <?php }?>
         <h1 class="text-center">Student Mangement System</h1>
         <div class="d-flex  wraper-height-90">
         <div class="">

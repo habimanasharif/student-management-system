@@ -1,6 +1,3 @@
-.wraper-height-90{
- 
-}
 .d-flec{
     gap:10px !important;
 }
@@ -30,4 +27,7 @@
  .dropdown-menu{
    --bs-dropdown-padding-y:0.5 rem !important;
  }
- 
+ .message{
+ height: 3rem;
+ z-index: 1090;
+ }
