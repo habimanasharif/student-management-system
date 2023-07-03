@@ -21,6 +21,19 @@ function  readData():array{
   
 return $students;
 }
+function  readClassroomData():array{
+  global $conn;
+  $classrooms=[];
+  $sql = "SELECT * FROM classroom";
+  $result = $conn->query($sql);
+  if($result && $result->num_rows>0){
+    while($row = $result->fetch_assoc()){
+      $classrooms[]=$row;
+    }
+  }
+  
+return $classrooms;
+}
 
 function addData(array $data,string $key):void{
   global $conn;

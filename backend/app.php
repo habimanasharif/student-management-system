@@ -14,7 +14,8 @@ require_once "backend/actions.php";
 require_once "backend/routing.php";
 
 if($system_Type==="database"){
- $students=readData("data.json");
+ $students=readData();
+ $classrooms=readClassroomData();
 }
 else{
  $students=readFromJson("data.json");
