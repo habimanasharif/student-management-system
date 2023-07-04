@@ -7,21 +7,7 @@ function isRegNumberExists($array, $regNumber) {
   }
   return false;
 }
-
-function  readData():array{
-  global $conn;
-  $students=[];
-  $sql = "SELECT * FROM student";
-  $result = $conn->query($sql);
-  if($result && $result->num_rows>0){
-    while($row = $result->fetch_assoc()){
-        $students[]=$row;
-    }
-  }
-  
-return $students;
-}
-function  readClassroomData():array{
+function  readDataClassroom():array{
   global $conn;
   $classrooms=[];
   $sql = "SELECT * FROM classroom";
@@ -33,6 +19,42 @@ function  readClassroomData():array{
   }
   
 return $classrooms;
+}
+
+function  readData():array{
+  global $conn;
+  $students=[];
+  $sql = "SELECT student.reg_number, student.st_name, classroom.classroom_name AS st_classroom, student.st_grade
+  FROM student
+  JOIN classroom ON student.st_classroom = classroom.classroom_id;
+  ";
+  $result = $conn->query($sql);
+  if($result && $result->num_rows>0){
+    while($row = $result->fetch_assoc()){
+        $students[]=$row;
+    }
+  }
+  
+return $students;
+}
+function  report():array{
+  global $conn;
+  $students=[];
+  $sql = "
+  SELECT student.reg_number, student.st_name, classroom.classroom_name AS st_classroom, student.st_grade
+FROM student
+JOIN classroom ON student.st_classroom = classroom.classroom_id
+GROUP BY student.reg_number, student.st_name, classroom.classroom_name, student.st_grade;
+  ";
+  $result = $conn->query($sql);
+  if($result && $result->num_rows>0){
+    while($row = $result->fetch_assoc()){
+      $classroom = $row['st_classroom'];
+        $students[$classroom][]=$row;
+    }
+  }
+  
+return $students;
 }
 
 function addData(array $data,string $key):void{

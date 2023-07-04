@@ -15,6 +15,17 @@ require_once "backend/app.php";
     
     <div class="container ">
     <form action="" method="POST">
+    <?php global $message; if ($message){?>
+      <div class="position-absolute d-flex mt-2 w-100 justify-content-center ">
+   <div class="<?php if($message["type"]==="success") echo 'bg-success'; else echo 'bg-danger'; ?>  message shadow  w-50 d-flex  ">
+    <div class="py-2 px-2">
+    <?php echo $message["text"] ?></div>
+    
+    <button type="submit" name="cancel" value="1" class="btn-close me-2 m-auto" aria-label="Close"> </button>
+   
+  </div>
+  </div>
+  <?php }?>
         <h1 class="text-center"> Classroom List</h1>
         <div class="d-flex  wraper-height-90">
         <div class="">
@@ -62,14 +73,14 @@ require_once "backend/app.php";
   <ul class="dropdown-menu" aria-labelledby="ellipsisDropdown">
     <li>
     <div class="">
-     <button type='button' name='st_action' value='#class_1' class='btn w-100 btn-primary' data-bs-toggle='modal' data-bs-target='#class_1'>
+     <button type='button' name='st_action' value='#class_<?php echo $classroom["classroom_id"] ?>' class='btn w-100 btn-primary' data-bs-toggle='modal' data-bs-target='#class_<?php echo $classroom["classroom_id"] ?>'>
   Edit
 </button>
     </div></li>
 
     <li>
       <div class="">
-      <button type="submit" name="delete_student" class='btn w-100 btn-danger' value="#class_1">Delete</button>
+      <button type="submit" name="delete_class" class='btn w-100 btn-danger' value="<?php echo $classroom["classroom_id"]?>">Delete</button>
       </div>
     </li>
   </ul>
@@ -82,25 +93,29 @@ require_once "backend/app.php";
         </table>
 
         <!-- Modal -->
-<div class="modal fade" id="#class_1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <?php 
+    foreach($classrooms as $classroom){
+    ?>
+<div class="modal fade" id="class_<?php echo $classroom["classroom_id"] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5 text-center" id="exampleModalLabel">Update Student</h1>
+        <h1 class="modal-title fs-5 text-center" id="exampleModalLabel">Update Classroom</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
     <div class="mb-2">
      <label for='exampleFormControlInput1' class='form-label'>Classroom name</label>
-  <input type='text' name="1" value="1" class='form-control' id='exampleFormControlInput1' >
+  <input type='text' name="classroom_<?php echo $classroom["classroom_id"] ?>" value="<?php echo$classroom["classroom_name"]; ?>" class='form-control' id='exampleFormControlInput1' >
 
 </div>
-<button type="submit" name="update_student" value="1" class="btn btn-primary">Update Class</button>
+<button type="submit" name="update_class" value="<?php echo $classroom["classroom_id"] ?>" class="btn btn-primary">Update Class</button>
 
       </div>
     </div>
   </div>
 </div>
+<?php } ?>
         </div>
         </div>
     </form>

@@ -1,5 +1,6 @@
 <?php
 require_once "backend/app.php";
+global $system_Type;
 ?>
 
 <!DOCTYPE html>
@@ -39,12 +40,21 @@ require_once "backend/app.php";
 </div>
 <div class="mb-2">
   <label for="exampleFormControlInput1" class="form-label">Student Class</label>
+  <?php if($system_Type==="database"){ echo "<select name='st_classroom' class='form-select'>";
+    foreach($classrooms as $classroom){
+    ?>
+    <option value="<?php echo $classroom["classroom_id"]?>"> <?php echo $classroom["classroom_name"]?></option>
+ <?php };
+echo "</select>";
+} else {?>
   <select name="st_classroom" class="form-select">
         <option> Class A</option>
         <option> Class B</option>
         <option> Class C</option>
         <option> Class D</option>
       </select>
+  <?php }?>
+  
 </div>
 <div class="mb-2">
   <label for="exampleFormControlInput1" class="form-label">Grade</label>
