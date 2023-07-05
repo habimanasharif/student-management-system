@@ -12,6 +12,7 @@ require_once "backend/app.php";
     <title>Stduent Report</title>
 </head>
 <body>
+<?php require_once("./navBar.php") ?>
     <div class="container">
         <h1 class="text-center mt-2"> Student report group by class</h1>
 

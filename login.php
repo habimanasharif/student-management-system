@@ -1,23 +1,22 @@
 <?php
 session_start();
-require_once "backend/db/mysql_connect.php";
 $errorMessage = "";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  if(isset($_POST["cancel"])){
+    $errorMessage="";
+  }else{
     $email = $_POST["email"];
     $password = $_POST["password"];
-    print_r( $email);
         if ($password=="admin" &&($email=="admin@student.com") ) {
             $_SESSION["email"] = $email;
-            echo "ehh";
-                header("Location: report.php");
+            header("Location: index.php");
             exit();
         } else {
             // Invalid  credentials
             $errorMessage = "Incorrect Credentials";
         }
+      }
 }
-//closing the databse
-require_once "backend/db/mysql-close.php";
 ?>
 
 
@@ -61,6 +60,21 @@ body {
 }
     </style>
 <body>
+  <div class="container positon-relative ">
+  <?php if ($errorMessage){?>
+      <div class="position-absolute d-flex mt-2 w-100 justify-content-center ">
+   <div class="bg-danger  message shadow  w-50 d-flex  justify-content-between">
+    <div class="py-2 px-2">
+    <?php echo $errorMessage  ?></div>
+
+    <form action="" Method="post" >
+  <button type="submit" name="cancel" value="1" class="btn-close me-2 m-auto mt-3" aria-label="Close"> </button>
+  </form>
+  </div>
+  
+  </div>
+  <?php }?>
+</div>
     
 <main class="form-signin w-100 m-auto">
   <form class=" px-5  py-5 shadow" action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="POST">

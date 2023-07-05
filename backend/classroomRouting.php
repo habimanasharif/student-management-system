@@ -9,5 +9,8 @@ if(isset($_POST)){
     }else if(filter_input(INPUT_POST, "update_class")){
        $id=filter_input(INPUT_POST, "update_class");
        updateData(filter_input(INPUT_POST, "classroom_$id"),$id);
-    }
+    }elseif(isset($_POST["cancel"])){
+        global $message;
+        $message=[];
+      }
 }

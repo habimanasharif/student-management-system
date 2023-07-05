@@ -12,7 +12,7 @@ require_once "backend/app.php";
     <title>Classrooms</title>
 </head>
 <body>
-    
+<?php require_once("./navBar.php") ?>
     <div class="container ">
     <form action="" method="POST">
     <?php global $message; if ($message){?>

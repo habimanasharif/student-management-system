@@ -14,6 +14,7 @@ global $system_Type;
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <?php require_once("./navBar.php") ?>
     <div class="container position-relative ">
     <form action="" method="POST">
       <?php global $message; if ($message){?>
@@ -154,13 +155,23 @@ echo "</select>";
 </div>
 <div class="mb-2">
   <label for="exampleFormControlInput1" class="form-label">Student Class</label>
+  <?php if($system_Type==="database"){ ?>
+    <select  name="updated_class_<?php echo $student["reg_number"] ?>" class="form-select">
+    <?php foreach($classrooms as $classroom){ ?>
+      <option value="<?php echo $classroom["classroom_id"]?>" <?php if($student['st_classroom']== $classroom["classroom_name"]){echo "selected";} ?>  > <?php echo $classroom["classroom_name"] ?></option>
+      
+  <?php };
+  echo "</select>";
+} else{?>
       <select  name="updated_class_<?php echo $student["reg_number"] ?>" class="form-select">
         <option <?php if($student['st_classroom']== 'Class A'){echo "selected";} ?>  > Class A</option>
         <option <?php if($student['st_classroom']== 'Class B'){echo "selected";} ?> > Class B </option>
         <option <?php if($student['st_classroom']== 'Class C'){echo "selected";} ?>  > Class C</option>
         <option <?php  if($student['st_classroom']== 'Class D'){echo "selected";} ?> > Class D</option>
       </select>
+      <?php }?>
 </div>
+
 <div class="mb-2">
   <label for="exampleFormControlInput1" class="form-label">Grade</label>
   <input type="number" name="updated_grade_<?php echo $student["reg_number"] ?>" value=<?php echo $student["st_grade"] ?> class="form-control" id="exampleFormControlInput1" max="10" min="0">
